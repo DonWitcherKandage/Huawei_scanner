@@ -172,7 +172,7 @@ canvas {
     height: auto;
     border-radius: 50%;
     /*background: radial-gradient(circle at 30% 30%, #00ffff, #0077aa);*/
-    color: #06aafd;
+    color: #ff4c4c;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -203,7 +203,7 @@ canvas {
     position: fixed;
     inset: 0;
     z-index: 40;
-    background: linear-gradient(135deg, #021124 0%, #0a4b8c 100%);
+    background: linear-gradient(135deg, #000000 0%, #ff0000 100%);
     transition: opacity 0.6s ease;
 }
 
@@ -237,7 +237,7 @@ canvas {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: rgba(110, 243, 255, 0.95); /* light green */
+    background: rgba(255, 79, 94, 0.95); /* light green */
     transform: translate(-50%, -50%) scale(0.6);
     pointer-events: none;
     z-index: 120; /* above preload and button */
@@ -272,13 +272,13 @@ canvas {
     transform: translate(-50%, -50%);
     border-radius: 100%;
     z-index: 2;
-    box-shadow: 0 0 50px 50px #25a4e9;
+    box-shadow: 0 0 50px 50px #e925c5;
 }
 
 #accessBtn::before {
     width: 100px;
     height: auto;
-    background-color: #70e6ef;
+    background-color: #ef9870;
     /* rotate the large shadow ring slowly */
     animation: shadow-rotate 1.5s linear infinite;
 }
@@ -286,7 +286,7 @@ canvas {
 #accessBtn::after {
     width: 550px;
     height: 550px;
-    background-color: #49b0e3;
+    background-color: #cc49e3;
     animation: circle-size 0.8s linear infinite alternate;
 }
 
@@ -351,13 +351,13 @@ canvas {
     transform: translate(-50%, -50%);
     border-radius: 100%;
     z-index: 2;
-    box-shadow: 0 0 20px 20px #1c084f;
+    box-shadow: 0 0 20px 20px #900f89;
 }
 
 .mic::before {
     width: min(400px, 80vw);
     height: min(400px, 80vw);
-    background-color: #1a084e;
+    background-color: #7f1274;
     animation: shadow-rotate 1.5s linear infinite;
 }
 
@@ -398,11 +398,11 @@ canvas {
     border-radius: 100%;
     z-index: 1;
     box-shadow: 
-        5px -10px 10px 15px #3c68a6,
-        5px -5px 4px 2px #ffffff, 
-        -5px -10px 20px 5px #5acee3,
-        5px 5px 7px 10px #1b788f, 
-        3px 2px 10px 20px #0cebff;
+        5px -10px 10px 15px #a13ca6,
+        5px -5px 4px 2px #ff8989, 
+        -5px -10px 20px 5px #e39e5a,
+        5px 5px 7px 10px #dcba12, 
+        3px 2px 10px 20px #d20cff;
     animation: shadow-rotate 1.5s linear infinite;
     transform-origin: center;
 }
