@@ -1,0 +1,457 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    left: 10%;
+    background: url('Images/New Hand Update-01.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+    /*background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);*/
+    font-family: 'Roboto', sans-serif;
+    cursor: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+/*#accessBtn { /* keep previous fallback */ 
+
+
+/*{
+            margin: 0;
+            padding: 0;
+            background: url('HandBcg.webp') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }*/
+
+canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/*.info {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    text-align: center;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px 30px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+
+.info h1 {
+    font-size: 24px;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 10px rgba(0, 255, 255, 0.5);
+}
+
+.info p {
+    font-size: 14px;
+    opacity: 0.9;
+}*/
+
+.finger-count {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #00ffff;
+    font-size: clamp(32px, 6vw, 48px);
+    font-weight: bold;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    z-index: 10;
+}
+
+/* .scan-complete {
+    position: fixed;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #649be8;
+    font-size: clamp(24px, 5vw, 36px);
+    font-weight: bold;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.scan-complete.active {
+    opacity: 1;
+}
+*/
+/* Horizontal scanning line animation */
+.scan-line {
+    position: fixed;
+    left: 0;
+    top: -4px;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, 
+        transparent 0%, 
+        rgba(0, 255, 255, 0.3) 20%, 
+        rgba(0, 255, 255, 0.8) 50%, 
+        rgba(0, 255, 255, 0.3) 80%, 
+        transparent 100%);
+    box-shadow: 
+        0 0 10px rgba(0, 255, 255, 0.8),
+        0 0 20px rgba(0, 255, 255, 0.6),
+        0 0 30px rgba(0, 255, 255, 0.4);
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.scan-line.active {
+    opacity: 1;
+    animation: scanning 3s linear infinite;
+}
+
+@keyframes scanning {
+    0% {
+        top: -4px;
+    }
+    100% {
+        top: 100vh;
+    }
+}
+
+/* Particles.js emitters root */
+#particle-emitters {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 6; /* above canvas but below HUD if needed */
+}
+
+ /*partical emitter*/
+.emitter-container {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.emitter-container.fade-in {
+    opacity: 1;
+}
+
+/* Access button overlay */
+#accessBtn {
+    position: fixed;
+    z-index: 50;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(400px, 80vw);
+    height: auto;
+    border-radius: 50%;
+    /*background: radial-gradient(circle at 30% 30%, #00ffff, #0077aa);*/
+    color: #06aafd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 20px;
+    box-shadow:0 0px 0px rgb(0, 200, 255), 0 0 20px rgba(77, 255, 255, 0.692) inset;
+    cursor: pointer;
+    user-select: none;
+    transition: opacity 0.6s ease, transform 0.4s ease;
+}
+
+#accessBtn.hidden {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    pointer-events: none;
+}
+
+#accessBtn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    display: block;
+}
+
+/* Preload gradient background */
+#preloadBg {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: linear-gradient(135deg, #021124 0%, #0a4b8c 100%);
+    transition: opacity 0.6s ease;
+}
+
+#preloadBg.hidden { opacity: 0; pointer-events: none; }
+
+/* Ripple effect */
+.ripple {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(184, 255, 158, 0.9); /* light green */
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0.2);
+    pointer-events: none;
+    animation: ripple-grow 800ms ease-out forwards;
+    box-shadow: 0 0 40px rgba(184,255,158,0.35);
+}
+
+@keyframes ripple-grow {
+    to {
+        transform: translate(-50%, -50%) scale(12);
+        opacity: 0;
+    }
+}
+
+/* Full viewport ripple */
+.ripple-full {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(110, 243, 255, 0.95); /* light green */
+    transform: translate(-50%, -50%) scale(0.6);
+    pointer-events: none;
+    z-index: 120; /* above preload and button */
+    animation: ripple-full 900ms ease-out forwards;
+    box-shadow: 0 0 120px rgba(255, 255, 255, 0.45);
+}
+
+/* Mic-style animated rings and rotating shadow applied to the access button
+   Converted from the provided SCSS; the button image is kept intact. */
+#accessBtn {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    width: 500px;
+    height: 500px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    pointer-events: auto;
+}
+
+#accessBtn::before,
+#accessBtn::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    z-index: 2;
+    box-shadow: 0 0 50px 50px #25a4e9;
+}
+
+#accessBtn::before {
+    width: 100px;
+    height: auto;
+    background-color: #70e6ef;
+    /* rotate the large shadow ring slowly */
+    animation: shadow-rotate 1.5s linear infinite;
+}
+
+#accessBtn::after {
+    width: 550px;
+    height: 550px;
+    background-color: #49b0e3;
+    animation: circle-size 0.8s linear infinite alternate;
+}
+
+/* keep the provided button image visually unchanged, but put it above the rings */
+#accessBtn img {
+    position: relative;
+    z-index: 3;
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    border-radius: 50%;
+}
+
+@keyframes circle-size {
+    from { 
+        width: min(250px, 60vw); 
+        height: min(250px, 60vw); 
+    }
+    to { 
+        width: min(300px, 70vw); 
+        height: min(300px, 70vw); 
+    }
+}
+
+@keyframes shadow-rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes ripple-full {
+    to {
+        transform: translate(-50%, -50%) scale(120);
+        opacity: 0;
+    }
+}
+
+/* .mic component styles for the animated button */
+.mic {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    width: min(400px, 80vw);
+    height: min(400px, 80vw);
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    pointer-events: auto;
+}
+
+.mic::before,
+.mic::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    z-index: 2;
+    box-shadow: 0 0 20px 20px #1c084f;
+}
+
+.mic::before {
+    width: min(400px, 80vw);
+    height: min(400px, 80vw);
+    background-color: #1a084e;
+    animation: shadow-rotate 1.5s linear infinite;
+}
+
+.mic::after {
+    width: min(250px, 60vw);
+    height: min(250px, 60vw);
+    background-color: #2f1e5f;
+    animation: circle-size 0.8s linear infinite alternate;
+}
+
+.mic-icon {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+}
+
+.mic-icon img {
+    width: auto;
+    max-width: 62%;
+    max-height: 62%;
+    object-fit: contain;
+    display: block;
+    border-radius: 50%;
+}
+/*rotating shadow*/
+.mic-shadow {
+    width: min(400px, 80vw);
+    height: min(400px, 80vw);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    z-index: 1;
+    box-shadow: 
+        5px -10px 10px 15px #3c68a6,
+        5px -5px 4px 2px #ffffff, 
+        -5px -10px 20px 5px #5acee3,
+        5px 5px 7px 10px #1b788f, 
+        3px 2px 10px 20px #0cebff;
+    animation: shadow-rotate 1.5s linear infinite;
+    transform-origin: center;
+}
+
+/* Responsive adjustments for vertical/portrait displays */
+@media (orientation: portrait) {
+    .finger-count {
+        bottom: 5vh;
+        font-size: clamp(28px, 8vw, 44px);
+    }
+    
+    .mic {
+        width: min(300px, 70vw);
+        height: min(300px, 70vw);
+    }
+    
+    .mic::before {
+        width: min(300px, 70vw);
+        height: min(300px, 70vw);
+    }
+    
+    .mic::after {
+        width: min(200px, 50vw);
+        height: min(200px, 50vw);
+    }
+    
+    .mic-shadow {
+        width: min(300px, 70vw);
+        height: min(300px, 70vw);
+    }
+}
+
+@media (max-width: 768px) {
+    .finger-count {
+        font-size: clamp(24px, 10vw, 40px);
+        bottom: 20px;
+    }
+    
+    .scan-complete {
+        font-size: clamp(20px, 8vw, 32px);
+    }
+}
+
+/* For very tall screens (vertical displays) */
+@media (min-height: 900px) and (orientation: portrait) {
+    .finger-count {
+        bottom: 8vh;
+    }
+}
+
+
+

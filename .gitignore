@@ -1,0 +1,34 @@
+particles.min.js
+
+# Cache files and temporary files
+*.tmp
+*.cache
+*.log
+thumb.db
+.DS_Store
+desktop.ini
+
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE and editor files
+.vscode/
+.vs/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build outputs (if applicable)
+dist/
+build/
+*.min.css
+*.min.js.map
+
+# OS generated files
+.Spotlight-V100
+.Trashes
+ehthumbs.db

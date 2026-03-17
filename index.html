@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5-Finger Fingerprint Scanner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="info">
+        <!--<h1>Fingerprint Scanner</h1>
+        <p>Place all 5 fingers on the screen</p>-->
+    </div>
+
+
+    <!-- <div class="finger-count" id="fingerCount">0/5</div> -->
+    <div class="scan-line" id="scanLine"></div>
+    
+    <canvas id="canvas"></canvas>
+
+    <!-- Preload gradient background shown until user taps -->
+    <div id="preloadBg" aria-hidden="true"></div>
+    <!-- Access button overlay - user must tap to start -->
+    <div class="mic" id="accessBtn" role="button" aria-label="Touch to start">
+        <i class="mic-icon">
+            <img src="Images/Start_btn_2.png" alt="Touch to start" id="accessBtnImg">
+        </i>
+        <div class="mic-shadow"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
