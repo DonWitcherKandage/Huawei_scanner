@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<title>HUAWEI // IT PRODUCT LAUNCH 2026</title>
+
+<!-- Huawei Sans Regular -->
+<link href="https://db.onlinewebfonts.com/c/08dd84ac7cbc31484a901d60c8c2c205?family=Huawei+Sans" rel="stylesheet">
+<!-- Huawei Sans Bold -->
+<link href="https://db.onlinewebfonts.com/c/5f95098771302a020bc23ebf291a8b2e?family=Huawei+Sans+Bold" rel="stylesheet">
+
+<style>
+  :root {
+    --red:            #ff0022;
+    --red-dim:        #8b0010;
+    --red-glow:       rgba(255, 0, 34, 0.4);
+    --red-glow-str:   rgba(255, 0, 34, 0.85);
+    --black:          #000000;
+    --text:           #ff0022;
+    --text-dim:       #550010;
+    --white:          #ffffff;
+    --font-bold:      'Huawei Sans Bold', 'Huawei Sans', -apple-system, sans-serif;
+    --font-reg:       'Huawei Sans', -apple-system, sans-serif;
+    /* Safe-area for iPad notch / home-bar */
+    --safe-top:    env(safe-area-inset-top,    0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left:   env(safe-area-inset-left,   0px);
+    --safe-right:  env(safe-area-inset-right,  0px);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  html {
+    height: -webkit-fill-available;
+    height: 100%;
+  }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: var(--font-reg);
+    /* Use dvh with fill-available fallback for iPad */
+    width:  100vw;
+    height: 100vh;
+    height: -webkit-fill-available;
+    height: 100dvh;
+    overflow: hidden;
+    position: fixed; /* prevents iOS rubber-band scroll */
+    top: 0; left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Disable all default touch behaviours */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Scanline overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,0,0,0.09) 2px, rgba(0,0,0,0.09) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* ── Corner brackets ───────────────────────────────────── */
+  .corner {
+    position: fixed;
+    width: 56px; height: 56px;
+    z-index: 60;
+  }
+  .corner::before, .corner::after {
+    content: '';
+    position: absolute;
+    background: var(--red);
+    box-shadow: 0 0 10px var(--red-glow);
+  }
+  .corner::before { width: 2px; height: 30px; }
+  .corner::after  { width: 30px; height: 2px; }
+  /* Respect safe-area so corners aren't clipped by iPad bezel */
+  .corner.tl { top:  calc(20px + var(--safe-top));    left:  calc(20px + var(--safe-left)); }
+  .corner.tr { top:  calc(20px + var(--safe-top));    right: calc(20px + var(--safe-right)); transform: scaleX(-1); }
+  .corner.bl { bottom: calc(20px + var(--safe-bottom)); left:  calc(20px + var(--safe-left)); transform: scaleY(-1); }
+  .corner.br { bottom: calc(20px + var(--safe-bottom)); right: calc(20px + var(--safe-right)); transform: scale(-1); }
+
+  /* ── Top header ────────────────────────────────────────── */
+  .header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding-top: var(--safe-top);
+    padding-left:  calc(32px + var(--safe-left));
+    padding-right: calc(32px + var(--safe-right));
+    height: calc(62px + var(--safe-top));
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    z-index: 55;
+    border-bottom: 1px solid rgba(255,0,34,0.13);
+    background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%);
+    /* Prevent header swallowing canvas touches */
+    pointer-events: none;
+  }
+
+  .hw-logo .brand {
+    font-family: var(--font-bold);
+    font-size: 20px;
+    letter-spacing: 0.22em;
+    color: var(--white);
+    text-shadow: 0 0 20px rgba(255,255,255,0.25);
+  }
+  .hw-logo .brand em { color: var(--red); font-style: normal; text-shadow: 0 0 14px var(--red-glow); }
+  .hw-logo .sub {
+    font-family: var(--font-reg);
+    font-size: 9px;
+    letter-spacing: 0.36em;
+    color: var(--text-dim);
+    margin-top: 3px;
+  }
+
+  .header-right {
+    text-align: right;
+    font-family: var(--font-reg);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+  .header-right strong {
+    font-family: var(--font-bold);
+    color: var(--red);
+    text-shadow: 0 0 6px var(--red-glow);
+    font-weight: normal;
+  }
+
+  /* ── Bottom status bar ──────────────────────────────────── */
+  .status {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    padding-bottom: var(--safe-bottom);
+    padding-left:  var(--safe-left);
+    padding-right: var(--safe-right);
+    height: calc(46px + var(--safe-bottom));
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 14px;
+    gap: 14px;
+    border-top: 1px solid rgba(255,0,34,0.13);
+    z-index: 55;
+    font-family: var(--font-reg);
+    font-size: 9px;
+    letter-spacing: 0.26em;
+    color: var(--text-dim);
+    background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%);
+    pointer-events: none;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .dot {
+    display: inline-block;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 7px var(--red);
+    flex-shrink: 0;
+    -webkit-animation: blink 1.5s step-end infinite;
+    animation: blink 1.5s step-end infinite;
+  }
+  .live { color: var(--red); text-shadow: 0 0 6px var(--red-glow); }
+  @-webkit-keyframes blink { 50% { opacity: 0; } }
+  @keyframes blink          { 50% { opacity: 0; } }
+
+  /* ── Canvas ─────────────────────────────────────────────── */
+  canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    display: block;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     SHARED overlay base
+  ══════════════════════════════════════════════════════════ */
+  .overlay {
+    position: fixed;
+    /* Vertically centred between header and status bar */
+    top:  calc(62px + var(--safe-top));
+    bottom: calc(46px + var(--safe-bottom));
+    left:  0; right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    /* Let touches fall through to canvas by default */
+    pointer-events: none;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     STATE: IDLE
+  ══════════════════════════════════════════════════════════ */
+  #idleOverlay {
+    -webkit-transition: opacity 0.55s ease;
+    transition: opacity 0.55s ease;
+  }
+  #idleOverlay.hidden { opacity: 0; }
+
+  .ghost-year {
+    font-family: var(--font-bold);
+    font-size: clamp(76px, 15vw, 144px);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,0,34,0.16);
+    letter-spacing: 0.08em;
+    line-height: 1;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .idle-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    margin-top: -14px;
+  }
+  .idle-event-name {
+    font-family: var(--font-bold);
+    font-size: clamp(12px, 2vw, 16px);
+    letter-spacing: 0.48em;
+    color: var(--white);
+    text-transform: uppercase;
+    text-shadow: 0 0 18px rgba(255,255,255,0.2);
+  }
+  .idle-series {
+    font-family: var(--font-reg);
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .h-divider {
+    width: 110px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+    box-shadow: 0 0 8px var(--red-glow);
+    margin: 22px 0 26px;
+  }
+
+  .tap-cta {
+    font-family: var(--font-bold);
+    font-size: 13px;
+    letter-spacing: 0.55em;
+    color: var(--red);
+    text-transform: uppercase;
+    -webkit-animation: tap-pulse 2s ease-in-out infinite;
+    animation: tap-pulse 2s ease-in-out infinite;
+  }
+  .tap-note {
+    margin-top: 10px;
+    font-family: var(--font-reg);
+    font-size: 9px;
+    letter-spacing: 0.32em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  @-webkit-keyframes tap-pulse {
+    0%,100% { opacity: 0.3; text-shadow: none; }
+    50%     { opacity: 1;   text-shadow: 0 0 26px rgba(255,0,34,0.95); }
+  }
+  @keyframes tap-pulse {
+    0%,100% { opacity: 0.3; text-shadow: none; }
+    50%     { opacity: 1;   text-shadow: 0 0 26px rgba(255,0,34,0.95); }
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     STATE: BUTTON
+  ══════════════════════════════════════════════════════════ */
+  #btnOverlay {
+    opacity: 0;
+    -webkit-transform: translateY(14px);
+    transform: translateY(14px);
+    -webkit-transition: opacity 0.45s ease, -webkit-transform 0.45s ease;
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  #btnOverlay.visible {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    pointer-events: auto; /* re-enable so button is tappable */
+  }
+
+  .btn-eyebrow {
+    font-family: var(--font-reg);
+    font-size: 9px;
+    letter-spacing: 0.46em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .btn-eyebrow em { color: var(--red); font-style: normal; }
+
+  .launch-btn {
+    font-family: var(--font-bold);
+    font-size: 20px;
+    letter-spacing: 0.55em;
+    color: var(--red);
+    background: rgba(0,0,0,0.92);
+    border: none;
+    /* Large touch target for iPad fingers */
+    padding: 22px 68px;
+    cursor: pointer;
+    text-transform: uppercase;
+    position: relative;
+    -webkit-clip-path: polygon(12px 0%, calc(100% - 12px) 0%, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0% calc(100% - 12px), 0% 12px);
+    clip-path:         polygon(12px 0%, calc(100% - 12px) 0%, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0% calc(100% - 12px), 0% 12px);
+    box-shadow: 0 0 0 1.5px var(--red), 0 0 28px var(--red-glow), inset 0 0 24px rgba(255,0,34,0.04);
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    /* Ensure iOS doesn't apply default button styles */
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .launch-btn:hover  { background: rgba(255,0,34,0.07); box-shadow: 0 0 0 1.5px var(--red), 0 0 55px var(--red-glow-str), inset 0 0 30px rgba(255,0,34,0.1); text-shadow: 0 0 16px var(--red); }
+  .launch-btn:active { -webkit-transform: scale(0.97); transform: scale(0.97); }
+
+  .btn-sub {
+    font-family: var(--font-reg);
+    font-size: 9px;
+    letter-spacing: 0.34em;
+    color: var(--text-dim);
+    text-align: center;
+    line-height: 2;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     STATE: LAUNCHING
+  ══════════════════════════════════════════════════════════ */
+  #launchUi {
+    opacity: 0;
+    -webkit-transition: opacity 0.4s ease;
+    transition: opacity 0.4s ease;
+  }
+  #launchUi.visible { opacity: 1; }
+
+  .launch-wordmark {
+    font-family: var(--font-bold);
+    font-size: clamp(32px, 6.5vw, 52px);
+    letter-spacing: 0.38em;
+    color: var(--white);
+    text-shadow: 0 0 30px rgba(255,255,255,0.5), 0 0 70px rgba(255,0,34,0.18);
+    -webkit-animation: flicker 5s step-end infinite;
+    animation: flicker 5s step-end infinite;
+  }
+  @-webkit-keyframes flicker { 0%,94%,96%,100%{opacity:1;} 95%{opacity:0.82;} }
+  @keyframes flicker          { 0%,94%,96%,100%{opacity:1;} 95%{opacity:0.82;} }
+
+  .launch-year-tag {
+    font-family: var(--font-reg);
+    font-size: 10px;
+    letter-spacing: 0.52em;
+    color: var(--text-dim);
+    margin-top: -8px;
+    text-transform: uppercase;
+  }
+
+  .launch-status {
+    font-family: var(--font-bold);
+    font-size: 12px;
+    letter-spacing: 0.44em;
+    color: var(--red);
+    text-shadow: 0 0 12px var(--red-glow);
+    -webkit-animation: pulse-lbl 0.9s ease-in-out infinite alternate;
+    animation: pulse-lbl 0.9s ease-in-out infinite alternate;
+    min-width: 300px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  @-webkit-keyframes pulse-lbl { from{opacity:.55;} to{opacity:1; text-shadow:0 0 24px var(--red-glow-str);} }
+  @keyframes pulse-lbl          { from{opacity:.55;} to{opacity:1; text-shadow:0 0 24px var(--red-glow-str);} }
+
+  .prog-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 300px;
+    margin-top: 6px;
+  }
+  .prog-bar {
+    width: 100%; height: 2px;
+    background: rgba(255,0,34,0.08);
+    position: relative; overflow: visible;
+  }
+  .prog-fill {
+    height: 100%; width: 0%;
+    background: var(--red);
+    box-shadow: 0 0 12px var(--red), 0 0 24px rgba(255,0,34,0.4);
+    -webkit-transition: width 0.12s linear;
+    transition: width 0.12s linear;
+    position: relative;
+  }
+  .prog-fill::after {
+    content: '';
+    position: absolute;
+    right: -1px; top: -4px;
+    width: 2px; height: 10px;
+    background: #fff;
+    box-shadow: 0 0 8px #fff, 0 0 16px rgba(255,255,255,0.5);
+  }
+  .prog-meta {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-reg);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .prog-pct { font-family: var(--font-bold); color: var(--red); font-size: 10px; }
+
+</style>
+</head>
+<body>
+
+<div class="corner tl"></div>
+<div class="corner tr"></div>
+<div class="corner bl"></div>
+<div class="corner br"></div>
+
+<!-- Header (pointer-events:none so touches reach canvas) -->
+<div class="header">
+  <div class="hw-logo">
+    <div class="brand">HUA<em>WEI</em></div>
+    <div class="sub">Technology Co., Ltd.</div>
+  </div>
+  <div class="header-right">
+    <strong>IT Product Launch</strong><br>
+    March &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; Global
+  </div>
+</div>
+
+<canvas id="hexCanvas"></canvas>
+
+<!-- IDLE STATE -->
+<div class="overlay" id="idleOverlay">
+  <div class="ghost-year">2026</div>
+  <div class="idle-center">
+    <div class="idle-event-name">IT Product Launch</div>
+    <div class="idle-series">Huawei Global Innovation Series</div>
+  </div>
+  <div class="h-divider"></div>
+  <div class="tap-cta">Tap to Start</div>
+  <div class="tap-note">Touch anywhere to continue</div>
+</div>
+
+<!-- BUTTON STATE -->
+<div class="overlay" id="btnOverlay">
+  <div class="btn-eyebrow">HUAWEI <em>//</em> IT Product Launch · 2026</div>
+  <button class="launch-btn" id="launchBtn">Launch</button>
+  <div class="btn-sub">
+    Huawei Global Innovation Series<br>
+    Press to Initiate Reveal Sequence
+  </div>
+</div>
+
+<!-- LAUNCHING STATE -->
+<div class="overlay" id="launchUi">
+  <div class="launch-wordmark">HUAWEI</div>
+  <div class="launch-year-tag">IT Product Launch · 2026</div>
+  <div class="launch-status" id="launchStatus">Initializing Launch...</div>
+  <div class="prog-block">
+    <div class="prog-bar">
+      <div class="prog-fill" id="progFill"></div>
+    </div>
+    <div class="prog-meta">
+      <span>Huawei Global Reveal</span>
+      <span class="prog-pct" id="progPct">0%</span>
+    </div>
+  </div>
+</div>
+
+<!-- Status bar (pointer-events:none) -->
+<div class="status">
+  <span class="dot"></span>
+  <span class="live">Live</span>
+  &nbsp;·&nbsp; Huawei IT Product Launch 2026 &nbsp;·&nbsp; Global Event &nbsp;·&nbsp;
+  <span class="dot" style="-webkit-animation-delay:0.7s;animation-delay:0.7s"></span>
+  <span class="live">Grid Active</span>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────────
+   iPad-safe vanilla JS — no passive issues, DPR-aware canvas
+───────────────────────────────────────────────────────── */
+const canvas       = document.getElementById('hexCanvas');
+const ctx          = canvas.getContext('2d');
+const idleOverlay  = document.getElementById('idleOverlay');
+const btnOverlay   = document.getElementById('btnOverlay');
+const launchUi     = document.getElementById('launchUi');
+const launchBtn    = document.getElementById('launchBtn');
+const progFill     = document.getElementById('progFill');
+const launchStatus = document.getElementById('launchStatus');
+const progPct      = document.getElementById('progPct');
+
+let state = 'idle';
+let hexes = [], ripples = [];
+let W, H, DPR;
+let scanStart, scanInterval, rippleTimer;
+const DURATION = 20000;
+const HEX = 28, RED = '#ff0022';
+
+/* ── DPR-aware canvas resize ────────────────────────────── */
+function resizeCanvas() {
+  DPR = Math.min(window.devicePixelRatio || 1, 2); // cap at 2× for perf
+  W = window.innerWidth;
+  H = window.innerHeight;
+  canvas.width  = W * DPR;
+  canvas.height = H * DPR;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  buildGrid();
+}
+
+/* ── Hex grid ───────────────────────────────────────────── */
+function hPt(cx, cy, sz, i) {
+  const a = Math.PI / 180 * (60 * i - 30);
+  return [cx + sz * Math.cos(a), cy + sz * Math.sin(a)];
+}
+
+function buildGrid() {
+  hexes = [];
+  const w = HEX * 2, h = Math.sqrt(3) * HEX;
+  const cols = Math.ceil(W / (w * 0.75)) + 2;
+  const rows = Math.ceil(H / h) + 2;
+  for (let r = -1; r < rows; r++) {
+    for (let c = -1; c < cols; c++) {
+      const x = c * w * 0.75;
+      const y = r * h + (c % 2 === 0 ? 0 : h / 2);
+      hexes.push({
+        x, y,
+        dist: Math.hypot(x - W / 2, y - H / 2),
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.25 + Math.random() * 0.45
+      });
+    }
+  }
+}
+
+/* ── Draw hex ───────────────────────────────────────────── */
+function drawHex(x, y, sa, ga) {
+  ctx.beginPath();
+  for (let i = 0; i < 6; i++) {
+    const [px, py] = hPt(x, y, HEX - 1.5, i);
+    i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(4,4,4,0.93)';
+  ctx.fill();
+  if (ga > 0.04) { ctx.shadowBlur = 14 * ga; ctx.shadowColor = RED; }
+  ctx.strokeStyle = `rgba(255,0,34,${sa})`;
+  ctx.lineWidth = 1.1;
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+}
+
+/* ── Ripples ────────────────────────────────────────────── */
+function addRipple(cx, cy) { ripples.push({ cx, cy, born: Date.now() }); }
+function updateRipples() {
+  const n = Date.now();
+  ripples = ripples.filter(r => n - r.born < 2500);
+}
+
+/* ── Render loop ────────────────────────────────────────── */
+function tick() {
+  requestAnimationFrame(tick);
+  ctx.clearRect(0, 0, W, H);
+  const now = Date.now(), t = now / 1000;
+  updateRipples();
+  const maxD = Math.hypot(W / 2, H / 2);
+
+  for (let i = 0; i < hexes.length; i++) {
+    const h = hexes[i];
+    const br   = (Math.sin(t * h.speed + h.phase) + 1) / 2;
+    const prox = 1 - Math.min(h.dist / (maxD * 0.85), 1);
+    let sa, ga;
+    if (state === 'idle' || state === 'button') {
+      sa = 0.05 + br * 0.13 + prox * 0.09;
+      ga = br * 0.22 * prox;
+    } else {
+      sa = 0.04 + br * 0.05;
+      ga = 0;
+    }
+    let boost = 0;
+    for (let j = 0; j < ripples.length; j++) {
+      const rp  = ripples[j];
+      const age  = now - rp.born;
+      const ring = age / 2500 * Math.max(W, H) * 1.15;
+      const d    = Math.hypot(h.x - rp.cx, h.y - rp.cy);
+      const bw   = 65 + ring * 0.18;
+      const dlt  = Math.abs(d - ring);
+      if (dlt < bw) {
+        const s = (1 - dlt / bw) * (1 - age / 2500);
+        if (s > boost) boost = s;
+      }
+    }
+    drawHex(h.x, h.y, Math.min(sa + boost * 0.94, 1), Math.min(ga + boost * 0.88, 1));
+  }
+}
+
+/* ── Touch / click handling ─────────────────────────────── */
+// Single unified handler avoids double-fire on iPad
+function onCanvasTap(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  if (state !== 'idle') return;
+  state = 'button';
+  idleOverlay.classList.add('hidden');
+  btnOverlay.classList.add('visible');
+}
+
+canvas.addEventListener('touchend',  onCanvasTap, { passive: false });
+canvas.addEventListener('click',     onCanvasTap, false);
+
+// Also allow tapping idle overlay text (it has pointer-events:none, touches fall through to canvas)
+idleOverlay.addEventListener('touchend',  onCanvasTap, { passive: false });
+idleOverlay.addEventListener('click',     onCanvasTap, false);
+
+/* Launch button */
+function onLaunchTap(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  startLaunch();
+}
+launchBtn.addEventListener('touchend',  onLaunchTap, { passive: false });
+launchBtn.addEventListener('click',     onLaunchTap, false);
+
+/* ── Launch sequence ────────────────────────────────────── */
+function startLaunch() {
+  if (state === 'scanning') return;
+  state = 'scanning';
+  btnOverlay.classList.remove('visible');
+  launchUi.classList.add('visible');
+  scanStart = Date.now();
+  progFill.style.width = '0%';
+  progPct.textContent  = '0%';
+  fireRipples();
+
+  const labels = [
+    'Initializing Launch...',
+    'Activating Systems...',
+    'Deploying Products...',
+    'Going Live Worldwide...',
+    'Transmitting Signal...',
+    'Huawei 2026 — Online...',
+  ];
+
+  scanInterval = setInterval(() => {
+    const el  = Date.now() - scanStart;
+    const pct = Math.min(el / DURATION * 100, 100);
+    progFill.style.width    = pct + '%';
+    progPct.textContent     = Math.floor(pct) + '%';
+    launchStatus.textContent = labels[Math.floor(el / (DURATION / labels.length)) % labels.length];
+    if (el >= DURATION) { clearInterval(scanInterval); endLaunch(); }
+  }, 80);
+}
+
+function fireRipples() {
+  const origins = [
+    { x: W / 2,   y: H / 2   },
+    { x: W * .15, y: H * .15 },
+    { x: W * .85, y: H * .85 },
+    { x: W * .15, y: H * .85 },
+    { x: W * .85, y: H * .15 },
+    { x: W * .5,  y: H * .08 },
+    { x: W * .5,  y: H * .92 },
+  ];
+  let count = 0;
+  function burst() {
+    if (state !== 'scanning') return;
+    const o = origins[count % origins.length];
+    addRipple(o.x + (Math.random() - .5) * 55, o.y + (Math.random() - .5) * 55);
+    count++;
+    rippleTimer = setTimeout(burst, count < 9 ? 250 : 580 + Math.random() * 680);
+  }
+  burst();
+}
+
+function endLaunch() {
+  clearTimeout(rippleTimer);
+  ripples = [];
+  launchUi.classList.remove('visible');
+  progFill.style.width    = '0%';
+  progPct.textContent     = '0%';
+  launchStatus.textContent = 'Initializing Launch...';
+  state = 'idle';
+  idleOverlay.classList.remove('hidden');
+}
+
+/* ── Orientation / resize ───────────────────────────────── */
+window.addEventListener('resize',             resizeCanvas, false);
+window.addEventListener('orientationchange',  () => setTimeout(resizeCanvas, 150), false);
+
+/* ── Boot ───────────────────────────────────────────────── */
+resizeCanvas();
+tick();
+</script>
+</body>
+</html>
